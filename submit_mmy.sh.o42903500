@@ -1,0 +1,42 @@
+Loading conda/analysis3-22.01
+  ERROR: Conflicting conda is loaded
+Traceback (most recent call last):
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.04/lib/python3.9/site-packages/pandas/core/tools/datetimes.py", line 509, in _to_datetime_with_format
+    values, tz = conversion.datetime_to_datetime64(arg)
+  File "pandas/_libs/tslibs/conversion.pyx", line 359, in pandas._libs.tslibs.conversion.datetime_to_datetime64
+TypeError: Unrecognized value type: <class 'str'>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-22.04/bin/era5grib", line 10, in <module>
+    sys.exit(main())
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.04/lib/python3.9/site-packages/era5grib/era5grib.py", line 341, in main
+    func(**dargs)
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.04/lib/python3.9/site-packages/era5grib/era5grib.py", line 132, in era5grib_wrf
+    start = pandas.to_datetime(
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.04/lib/python3.9/site-packages/pandas/core/tools/datetimes.py", line 914, in to_datetime
+    result = convert_listlike(np.array([arg]), format)[0]
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.04/lib/python3.9/site-packages/pandas/core/tools/datetimes.py", line 393, in _convert_listlike_datetimes
+    res = _to_datetime_with_format(
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.04/lib/python3.9/site-packages/pandas/core/tools/datetimes.py", line 513, in _to_datetime_with_format
+    raise err
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.04/lib/python3.9/site-packages/pandas/core/tools/datetimes.py", line 500, in _to_datetime_with_format
+    res = _array_strptime_with_fallback(
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.04/lib/python3.9/site-packages/pandas/core/tools/datetimes.py", line 436, in _array_strptime_with_fallback
+    result, timezones = array_strptime(arg, fmt, exact=exact, errors=errors)
+  File "pandas/_libs/tslibs/strptime.pyx", line 150, in pandas._libs.tslibs.strptime.array_strptime
+ValueError: time data '${SYEAR}-${SMONTH}-01_00:00:00' does not match format '%Y-%m-%d_%H:%M:%S' (match)
+
+======================================================================================
+                  Resource Usage on 2022-06-06 17:38:11:
+   Job Id:             42903500.gadi-pbs
+   Project:            w97
+   Exit Status:        1
+   Service Units:      0.36
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:20                                   
+   Memory Requested:   190.0GB               Memory Used: 1.26GB          
+   Walltime requested: 04:00:00            Walltime Used: 00:00:49        
+   JobFS requested:    175.0GB                JobFS used: 0B              
+======================================================================================

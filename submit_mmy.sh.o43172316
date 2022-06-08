@@ -1,0 +1,31 @@
+INFO:root:Time: Target (2017-01-01 00:00:00:2017-02-01 00:00:00)
+INFO:root:Latitudes: Target (-43.93:-19.98)
+INFO:root:Longitudes: Target (127.11:159.89)
+INFO:root:Creating intermediate file
+Traceback (most recent call last):
+  File "/g/data3/hh5/public/apps/miniconda3/envs/analysis3-22.01/bin/era5grib", line 10, in <module>
+    sys.exit(main())
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.01/lib/python3.9/site-packages/era5grib/era5grib.py", line 341, in main
+    func(**dargs)
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.01/lib/python3.9/site-packages/era5grib/era5grib.py", line 177, in era5grib_wrf
+    save_grib(ds, output, format=format)
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.01/lib/python3.9/site-packages/era5grib/era5grib.py", line 55, in save_grib
+    climtas.io.to_netcdf_throttled(ds, tmp_compressed)
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.01/lib/python3.9/site-packages/climtas/io.py", line 113, in to_netcdf_throttled
+    if v[0] == dask.array.core.store_chunk:
+  File "/g/data/hh5/public/apps/miniconda3/envs/analysis3-22.01/lib/python3.9/site-packages/numpy/lib/mixins.py", line 21, in func
+    return ufunc(self, other)
+TypeError: operand type(s) all returned NotImplemented from __array_ufunc__(<ufunc 'equal'>, '__call__', <COO: shape=(6483600,), dtype=float32, nnz=8, fill_value=0.0>, <function store_chunk at 0x149bdf431b80>): 'COO', 'function'
+
+======================================================================================
+                  Resource Usage on 2022-06-08 18:55:20:
+   Job Id:             43172316.gadi-pbs
+   Project:            w97
+   Exit Status:        1
+   Service Units:      0.60
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:48                                   
+   Memory Requested:   190.0GB               Memory Used: 3.24GB          
+   Walltime requested: 03:00:00            Walltime Used: 00:01:22        
+   JobFS requested:    175.0GB                JobFS used: 0B              
+======================================================================================

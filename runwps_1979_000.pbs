@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#PBS -P n81
+#PBS -q hugemem
+#PBS -l walltime=04:00:00
+#PBS -l ncpus=6
+#PBS -l mem=183GB
+#PBS -l jobfs=175GB
+#PBS -l storage=gdata/gh02+scratch/gh02+gdata/gh02+gdata/hh5+gdata/sx70+gdata/rt52+gdata/zz93+gdata/w28
+#PBS -j oe
+#PBS -l wd
+#PBS -m a
+#PBS -M christopherthomas@cmt.id.au
+
+set -e
+module purge
+module use /g/data/hh5/public/modules
+module load conda/analysis3-unstable
+
+era5grib wrf --no-era5land --namelist /g/data3/w28/cmt561/NARCliM_12.5-2.5/namelists/wps/1979/namelist_1979_000.wps --geo /g/data3/w28/cmt561/NARCliM_12.5-2.5/inputs/geo/geo_em.d01.nc --output /g/data/hh5/tmp/NARCliM_12.5/inputs/grib/1979/gribfile_1979_000.grib
+source /g/data3/w28/cmt561/sfw/gadi/wrf/4.3/vanilla/build.env
+cd ${PBS_JOBFS}
+ln -s /g/data3/w28/cmt561/NARCliM_12.5-2.5/namelists/wps/1979/namelist_1979_000.wps namelist.wps
+ln -s /g/data/hh5/tmp/NARCliM_12.5/inputs/grib/1979/gribfile_1979_000.grib GRIBFILE.AAA
+ln -s /g/data3/w28/cmt561/sfw/gadi/wrf/4.3/vanilla/WPS/ungrib/Variable_Tables/Vtable.ECMWF Vtable
+ln -s /g/data3/w28/cmt561/NARCliM_12.5-2.5/inputs/geo/geo_em.d01.nc
+ln -s /g/data3/w28/cmt561/NARCliM_12.5-2.5/inputs/geo/geo_em.d02.nc
+find /g/data3/w28/cmt561/sfw/gadi/wrf/4.3/vanilla/WPS -maxdepth 1 -mindepth 1 ! \( -name 'namelist*' -o -name 'geo_em*' -o -name '.*' \) | xargs -I% ln -s % ./
+mpirun -np ${PBS_NCPUS} ./ungrib.exe || true
+find -type f | xargs -I% rsync -aP % /g/data/hh5/tmp/NARCliM_12.5/inputs/grib/1979
+mpirun -np ${PBS_NCPUS} ./metgrid.exe || true
+#find -type f | xargs -I% rsync -aP % /g/data/hh5/tmp/NARCliM_12.5/inputs/grib/1979
+find -type f -name "met_em*"| xargs -I% rsync -aP % /g/data/hh5/tmp/NARCliM_12.5/inputs/metgrid
+#cd /g/data3/w28/cmt561/NARCliM_12.5-2.5/pbs/wps/1980
+#qsub runwps_1980_000.pbs
